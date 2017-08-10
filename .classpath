@@ -2,21 +2,8 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
-	<classpathentry kind="lib" path="jars/dom4j-2.0.1.jar"/>
+	<classpathentry kind="lib" path="jars/dom4j-2.0.1.jar" sourcepath="C:/Users/Chen Baohe/AppData/Local/Temp/.org.sf.feeling.decompiler1502334607392/source/dom4j-2.0.1-sources.jar"/>
 	<classpathentry kind="lib" path="jars/mongo-java-driver-3.4.2.jar"/>
-	<classpathentry kind="lib" path="jars/POIServerProxy-1.02.01.jar"/>
-	<classpathentry kind="lib" path="jars/LocalStruct-6.0.jar"/>
-	<classpathentry kind="lib" path="jars/gson-2.6.2.jar"/>
-	<classpathentry kind="lib" path="jars/commonlib-1.01.73.jar"/>
-	<classpathentry kind="lib" path="jars/commons-beanutils-1.9.2.jar"/>
-	<classpathentry kind="lib" path="jars/commons-collections-3.2.jar"/>
-	<classpathentry kind="lib" path="jars/commons-lang-2.6.jar"/>
-	<classpathentry kind="lib" path="jars/commons-logging-1.2.jar"/>
-	<classpathentry kind="lib" path="jars/dpgeom-6.0.jar"/>
-	<classpathentry kind="lib" path="jars/ezmorph-1.0.6.jar"/>
 	<classpathentry kind="lib" path="jars/log4j-1.2.9.jar"/>
-	<classpathentry kind="lib" path="jars/queryanalyse-0.0.1.jar"/>
-	<classpathentry kind="lib" path="jars/queryanalysetrie-0.0.1.jar"/>
-	<classpathentry kind="lib" path="jars/poi-3.16.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

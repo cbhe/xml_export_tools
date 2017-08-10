@@ -14,11 +14,11 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 
 import mongodb.Connection;
+import tools.Arguments;
 
 public class Test {
 	public static void main(String...args){
-		HashMap<String, String> map = new HashMap<String, String>();
-		map.put("name", "Chen Baohe");
-		
+		String path = "c:\\xet_properties.xml";
+		Arguments arguments = new Arguments(path);
 	}
 }
