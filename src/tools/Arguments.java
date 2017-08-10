@@ -4,7 +4,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 import javax.swing.text.ElementIterator;
 
@@ -16,9 +18,10 @@ public class Arguments {
 	public Calendar start;
 	public Calendar end;
 	public HashMap<String, HashMap<String, String>> fieldsCorresponding;
-	public String connectionUrl;
+	public String ip;
+	public String port;
 	public String collectionName;
-	public ArrayList<String> operations;
+	public Set<String> operations;
 	
 	public Arguments(String configFilePath){
 		this.configFilePath = configFilePath;
@@ -37,9 +40,8 @@ public class Arguments {
 		
 		//connection-set
 		Element connection_set = root.element("connection-set");
-		this.connectionUrl = connection_set.elementTextTrim("ip")
-							+":"
-							+connection_set.elementTextTrim("port");
+		this.ip = connection_set.elementTextTrim("ip");
+		this.port = connection_set.elementTextTrim("port");
 		this.collectionName = connection_set.elementTextTrim("collection-name");
 		
 		
@@ -61,7 +63,7 @@ public class Arguments {
 		}
 		
 		//operation-select
-		this.operations = new ArrayList<String>();
+		this.operations = new HashSet<String>();
 		Element operation_select = root.element("operation-select");
 		Iterator<Element> iterable = operation_select.elementIterator();
 		while(iterable.hasNext()){

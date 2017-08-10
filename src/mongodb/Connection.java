@@ -4,22 +4,21 @@ import org.bson.Document;
 
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 
 public class Connection {
-	private static MongoClient mongoClient;
-	public static MongoClient getClient(){
-		if(mongoClient == null){
-			mongoClient = new MongoClient("10.142.102.33", 27017);
-		}
-		return mongoClient;
+	private String ip;
+	private String port;
+	private String collectionName;
+	public Connection(String ip, String port, String collectionName){
+		this.ip = ip;
+		this.port = port;
+		this.collectionName = collectionName;
 	}
-	public static MongoCollection<Document> getMongoCollection(String collectionName){
-		return getClient().getDatabase("powerlistings").getCollection(collectionName);
-	}
-	public static void close(){
-		if(mongoClient != null){
-			mongoClient.close();
-			mongoClient = null;
-		}
+	public MongoCollection<Document> getCollection(){
+		MongoClient mongoClient = new MongoClient(this.ip, Integer.parseInt(this.port));
+		MongoDatabase database = mongoClient.getDatabase("powerlistings");
+		MongoCollection<Document> mongoCollection= database.getCollection(this.collectionName);
+		return mongoCollection;
 	}
 }

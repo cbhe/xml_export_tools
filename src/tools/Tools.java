@@ -11,6 +11,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Map;
+
+import org.dom4j.Document;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
 
 public class Tools {
 	public static void appendToFile(String filePath, String newStr) {
@@ -36,6 +41,9 @@ public class Tools {
 			e.printStackTrace();
 		}
 	}
+	public static void appendToFile(String newStr){
+		appendToFile("xml.txt", newStr);
+	}
 	public static Calendar string2Calendar(String pattern){
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = null;
@@ -48,6 +56,21 @@ public class Tools {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
 		return calendar;
+	}
+	public static void writeXML2file(org.bson.Document mongoDoc, Map<String, String> corresp, String rootName){
+		org.dom4j.Document xmlDoc = DocumentHelper.createDocument();
+		Element root = xmlDoc.addElement(rootName);
+		for(Map.Entry<String, String> entry: corresp.entrySet()){
+			String tagName = entry.getKey();
+			String valfield = entry.getValue();
+			if(valfield != null){
+				root.addElement(tagName).setText(mongoDoc.getString(valfield));
+			}
+			else{
+				root.addElement(tagName);
+			}
+		}
+		appendToFile(xmlDoc.getRootElement().asXML());
 	}
 }
 
