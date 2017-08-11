@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,6 +18,8 @@ import java.util.Map;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
+import org.dom4j.io.OutputFormat;
+import org.dom4j.io.XMLWriter;
 
 public class Tools {
 	public static void appendToFile(String filePath, String newStr) {
@@ -43,7 +46,7 @@ public class Tools {
 		}
 	}
 	public static void appendToFile(String newStr){
-		appendToFile("c:\\xml.txt", newStr);
+		appendToFile("xml.txt", newStr);
 	}
 	public static Calendar string2Calendar(String pattern){
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -65,15 +68,35 @@ public class Tools {
 			String tagName  = tagName_valField[0];
 			String valfield = tagName_valField[1];
 			if(valfield != null && valfield.trim().length()>0){
-				root.addElement(tagName).setText(mongoDoc.getString(valfield));
+				Object value = mongoDoc.get(valfield);
+				if(value == null){
+					value = "";
+				}
+				root.addElement(tagName).setText(value.toString());
 			}
 			else{
 				root.addElement(tagName);
 			}
 			System.out.println(xmlDoc.asXML());
-		}
-		appendToFile(xmlDoc.getRootElement().asXML());
+		}		
+		appendToFile(formatXml(xmlDoc, "utf-8", false));
 	}
+    public static String formatXml(Document document, String charset, boolean istrans) { 
+        OutputFormat format = OutputFormat.createPrettyPrint(); 
+        format.setEncoding(charset); 
+        StringWriter sw = new StringWriter(); 
+        XMLWriter xw = new XMLWriter(sw, format); 
+        xw.setEscapeText(istrans); 
+        try { 
+                xw.write(document.getRootElement()); 
+                xw.flush(); 
+                xw.close(); 
+        } catch (IOException e) { 
+                System.out.println("格式化XML文档发生异常，请检查！"); 
+                e.printStackTrace(); 
+        } 
+        return sw.toString().replaceAll("\n|  ", ""); 
+} 
 }
 
 

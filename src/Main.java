@@ -14,7 +14,7 @@ import tools.Tools;
 public class Main{
 	public static void main(String args[]){
 		//读取配置文件
-		Arguments arguments = new Arguments("c:\\xet_properties.xml");//同一个目录下
+		Arguments arguments = new Arguments("xet_properties.xml");//同一个目录下
 		//创建数据库链接，得到相应集合
 		Connection connection = new Connection(arguments.ip, arguments.port, arguments.collectionName);
 		MongoCollection<org.bson.Document> collection = connection.getCollection();
@@ -30,6 +30,7 @@ public class Main{
 				Object[] arr = arguments.fieldsCorresponding.get(operation);
 				String rootName = (String)arr[0];
 				ArrayList<String[]> corresp = (ArrayList<String[]>)arr[1];
+				//转换成xml并写入文件
 				Tools.writeXML2file(mongoDoc, corresp, rootName);
 			}
 		}

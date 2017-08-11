@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import org.bson.Document;
 
@@ -18,7 +19,8 @@ import tools.Arguments;
 
 public class Test {
 	public static void main(String...args){
-		String path = "c:\\xet_properties.xml";
-		Arguments arguments = new Arguments(path);
+		Double d = 100.02;
+		d.toString();
+		System.out.println(d.toString());
 	}
 }
