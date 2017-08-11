@@ -9,6 +9,7 @@ import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
@@ -42,7 +43,7 @@ public class Tools {
 		}
 	}
 	public static void appendToFile(String newStr){
-		appendToFile("xml.txt", newStr);
+		appendToFile("c:\\xml.txt", newStr);
 	}
 	public static Calendar string2Calendar(String pattern){
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -57,18 +58,19 @@ public class Tools {
 		calendar.setTime(date);
 		return calendar;
 	}
-	public static void writeXML2file(org.bson.Document mongoDoc, Map<String, String> corresp, String rootName){
+	public static void writeXML2file(org.bson.Document mongoDoc, ArrayList<String[]> corresp, String rootName){
 		org.dom4j.Document xmlDoc = DocumentHelper.createDocument();
 		Element root = xmlDoc.addElement(rootName);
-		for(Map.Entry<String, String> entry: corresp.entrySet()){
-			String tagName = entry.getKey();
-			String valfield = entry.getValue();
-			if(valfield != null){
+		for(String[] tagName_valField: corresp){
+			String tagName  = tagName_valField[0];
+			String valfield = tagName_valField[1];
+			if(valfield != null && valfield.trim().length()>0){
 				root.addElement(tagName).setText(mongoDoc.getString(valfield));
 			}
 			else{
 				root.addElement(tagName);
 			}
+			System.out.println(xmlDoc.asXML());
 		}
 		appendToFile(xmlDoc.getRootElement().asXML());
 	}

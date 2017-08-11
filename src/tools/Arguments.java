@@ -17,7 +17,7 @@ public class Arguments {
 	private String configFilePath;
 	public Calendar start;
 	public Calendar end;
-	public HashMap<String, HashMap<String, String>> fieldsCorresponding;
+	public HashMap<String, Object[]> fieldsCorresponding;
 	public String ip;
 	public String port;
 	public String collectionName;
@@ -70,21 +70,29 @@ public class Arguments {
 			this.operations.add(iterable.next().getTextTrim());
 		}
 		
-		//fields-corresponding  ---->  [(operation_root)->(tagName->valfield)]
-		this.fieldsCorresponding = new HashMap<String, HashMap<String,String>>();
+		//fields-corresponding  ---->  {(operation),[rootName, {(tagName,valField)}]}
+		//map(operation -> arr[2]{rootName, ArrayList{(tagName, valField)}})
+		this.fieldsCorresponding = new HashMap<String, Object[]>();
 		Element fields_corresponding = root.element("fields-corresponding");
 		for(Iterator<Element> iterator = fields_corresponding.elementIterator();iterator.hasNext();){
+			String operation;
+			Object[] arr = new Object[2];
+			String rootName;
+			ArrayList<String[]> list = new ArrayList<String[]>();
+			
 			Element table = iterator.next();
-			String operation = table.getName()+"_"+table.elementTextTrim("root");//operation_rootName
-			HashMap<String, String> map = new HashMap<String, String>();
+			operation = table.getName();
+			rootName  = table.elementTextTrim("root-name");
 			Element fields = table.element("fields");
 			for(Iterator<Element> iter = fields.elementIterator();iter.hasNext();){
 				Element element = iter.next();
 				String tagName = element.getName();
-				String valfield= element.getTextTrim();
-				map.put(tagName, valfield);
+				String valField = element.getTextTrim();
+				list.add(new String[]{tagName, valField});
 			}
-			this.fieldsCorresponding.put(operation, map);
+			arr[0] = rootName;
+			arr[1] = list;
+			this.fieldsCorresponding.put(operation, arr);
 		}
 	}
 }
