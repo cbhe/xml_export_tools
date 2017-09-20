@@ -16,11 +16,10 @@ import com.mongodb.client.MongoCollection;
 
 import mongodb.Connection;
 import tools.Arguments;
+import tools.Tools;
 
 public class Test {
 	public static void main(String...args){
-		Double d = 100.02;
-		d.toString();
-		System.out.println(d.toString());
+		System.out.println(args.length);
 	}
 }
